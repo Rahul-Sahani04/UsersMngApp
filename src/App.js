@@ -1,4 +1,3 @@
-import 'animate.css';
 
 import './App.css';
 import CustomInput from './components/userInput';
@@ -16,10 +15,11 @@ function App() {
   const [editedValues, setEditedValues] = useState({});
 
   const [newValue, setNewValue ] = useState("");
+  const url = "http://localhost:8080/api/v1/user";
 
   async function getAllUser() {
     try {
-      const response = await fetch("http://localhost:8080/api/v1/user");
+      const response = await fetch(url);
 
       if (!response.ok) {
         throw new Error("Failed to fetch user data");
@@ -45,7 +45,7 @@ function App() {
     console.log(updatedUserData)
 
     try {
-      const response = await fetch(`http://localhost:8080/api/v1/user/${userId}`, {
+      const response = await fetch(url+`/${userId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -82,7 +82,11 @@ function App() {
 
   async function handleAddUser() {
     try {
-      const response = await fetch("http://localhost:8080/api/v1/user", {
+      if (firstName === "") {
+        console.log("Empty Fields")
+        return 0;
+      }
+      const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -95,6 +99,8 @@ function App() {
 
       if (response.ok) {
         console.log("User added successfully.");
+        setFirstName("")
+        setLastName("")
         getAllUser();
       } else {
         console.error("Failed to add user.");
@@ -113,11 +119,12 @@ function App() {
     deletedRow.classList.remove('fade-out');
     
     try {
-      const response = await fetch(`http://localhost:8080/api/v1/user/${userId}`, {
+      const response = await fetch(url + `/${userId}`, {
         method: "DELETE",
       });
       
       if (response.ok) {
+
         console.log(`User ${userId} deleted successfully.`);
         
         const updatedUserDataWithoutDeleted = userData.filter(user => user.id !== userId);
@@ -154,14 +161,16 @@ function App() {
   return (
     <div className="App">
       <div className='myform'>
-        <CustomInput name={"First Name"} setNewValue={setFirstName} />
-        <CustomInput name={"Last Name"} setNewValue={setLastName} />
+      <CustomInput name={"First Name"} setNewValue={setFirstName} value={firstName} />
+      <CustomInput name={"Last Name"} setNewValue={setLastName} value={lastName} />
+
         <CustomButton name={"Add User"} onAddClick={handleAddUser} />
       </div>
       <table id="userdata">
         <caption>Existing Users</caption>
         <thead>
           <tr>
+            <th className='number'>S No.</th>
             <th>First Name</th>
             <th>Last Name</th>
             <th className='actions-col'>Actions</th>
@@ -174,6 +183,7 @@ function App() {
               className='animate__animated '
               style={{padding: "10px 15px"}}
               >
+                <td>{index + 1}</td>
               <td>
                 {editMode[user.id] ? (
                   <CustomEditInput 

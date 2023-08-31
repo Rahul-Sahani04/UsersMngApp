@@ -1,9 +1,10 @@
 package com.user.backend.BackendUserApi.model;
+
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -12,7 +13,7 @@ import lombok.AllArgsConstructor;
 
 @Entity
 @Table(name = "users")
-public class userModel {
+public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
