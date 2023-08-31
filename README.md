@@ -2,6 +2,8 @@
 
 Welcome to the Employee Management App! This application consists of both a frontend React application and a backend Spring Boot API that together allow users to manage employee data.
 
+![Screenshot](https://github.com/Rahul-Sahani04/UsersMngApp/blob/main/src/images/UserMgrApp.png?raw=true)
+
 ## Table of Contents
 
 - [Frontend](#frontend)
