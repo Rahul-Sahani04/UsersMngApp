@@ -25,7 +25,7 @@ To get started with the frontend, follow these steps:
 
 1. **Clone the Repository:**
     ```bash
-   git clone https://github.com/your-username/employee-app.git
+   git clone https://github.com/Rahul-Sahani04/UsersMngApp.git
    cd employee-app
     ```
 
