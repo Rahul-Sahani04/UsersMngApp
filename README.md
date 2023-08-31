@@ -1,70 +1,100 @@
-# Getting Started with Create React App
+# Employee Management App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to the Employee Management App! This application consists of both a frontend React application and a backend Spring Boot API that together allow users to manage employee data.
 
-## Available Scripts
+## Table of Contents
 
-In the project directory, you can run:
+- [Frontend](#frontend)
+  - [Getting Started](#getting-started)
+  - [Usage](#usage)
+- [Backend](#backend)
+  - [Prerequisites](#prerequisites)
+  - [Getting Started](#getting-started-1)
+  - [API Endpoints](#api-endpoints)
+- [Conclusion](#conclusion)
 
-### `npm start`
+## Frontend
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The frontend part of the application is built using React. It provides a user-friendly interface for managing employee data.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Getting Started
 
-### `npm test`
+To get started with the frontend, follow these steps:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. **Clone the Repository:**
+    ```bash
+   git clone https://github.com/your-username/employee-app.git
+   cd employee-app
+    ```
 
-### `npm run build`
+2. **Install Dependencies:**
+    ```bash
+    npm install
+    ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. **Start the Development Server:**
+    ```bash
+    npm start
+    ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+4. **Access the Application:**
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Open your web browser and go to http://localhost:3000 to use the application.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Usage
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Frontend
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+The frontend allows you to:
 
-## Learn More
+- **Add a New Employee:** Enter the first name and last name of the employee in the input fields and click the "Add User" button.
+- **Edit an Employee:** Click the "Edit" button for the employee you want to edit. Make the necessary changes and click the "Update" button.
+- **Delete an Employee:** Click the "Delete" button for the employee you want to delete. This will remove the employee from the database.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Backend
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The backend component of the application is built using Spring Boot. It provides RESTful API endpoints for managing employee data.
 
-### Code Splitting
+#### Prerequisites
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Before setting up the backend, ensure that you have the following dependencies:
 
-### Analyzing the Bundle Size
+- Java Development Kit (JDK)
+- PostgreSQL Database
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+#### Getting Started
 
-### Making a Progressive Web App
+To set up the backend, follow these steps:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+1. **Create a Spring Boot Project:**
+   Create a new Spring Boot project using Spring Initializr with the required dependencies: Spring Web, Spring Data JPA, PostgreSQL, and Lombok.
 
-### Advanced Configuration
+2. **Add Dependencies:**
+   Add the provided code snippets to your `pom.xml` file to include the required dependencies.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+3. **Implement Classes:**
+   Implement the provided classes `BackendUserApiApplication.java` and `UserController.java` in the appropriate packages as mentioned in the provided code.
 
-### Deployment
+4. **Configure Database:**
+   Configure the PostgreSQL database connection properties in the `application.properties` file.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+5. **Run the Application:**
+   Run the Spring Boot application. The backend will start on a specified port (usually 8080).
 
-### `npm run build` fails to minify
+#### API Endpoints
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The backend provides the following API endpoints:
+
+- **GET /api/v1/user:** Retrieve a list of all employees.
+- **POST /api/v1/user:** Create a new employee.
+- **GET /api/v1/user/{id}:** Retrieve details of a specific employee by ID.
+- **PUT /api/v1/user/{id}:** Update details of a specific employee by ID.
+- **DELETE /api/v1/user/{id}:** Delete a specific employee by ID.
+
+## Conclusion
+
+Congratulations! You now have a complete Employee Management App that seamlessly integrates both frontend and backend components. This app can serve as a strong foundation for more complex applications that require efficient employee data management.
+
+Feel free to explore and extend the functionality of both the frontend and backend components to cater to your specific requirements.

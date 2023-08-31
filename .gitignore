@@ -21,3 +21,48 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+
+# Compiled class files
+target/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Gradle
+.gradle/
+build/
+
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.next
+pom.xml.versionsBackup
+pom.xml
+
+# Log files
+*.log
+
+# macOS
+.DS_Store
+
+# Spring Boot application properties
+application.properties
+application.yml
+
+# Lombok
+.lombok
+
+# Compiled bytecode
+*.class
+
+# Maven Wrapper
+!.mvn/wrapper/maven-wrapper.jar
