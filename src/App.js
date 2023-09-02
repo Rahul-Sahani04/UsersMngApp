@@ -6,6 +6,9 @@ import ActionsButton from './components/actions';
 import { useEffect, useState } from 'react';
 import CustomEditInput from './components/userInputEdit';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
   const [userData, setUserData] = useState([]);
   const [firstName, setFirstName] = useState("");
@@ -14,7 +17,7 @@ function App() {
   const [editMode, setEditMode] = useState({});
   const [editedValues, setEditedValues] = useState({});
 
-  const [newValue, setNewValue ] = useState("");
+  const [newValue, setNewValue] = useState("");
   const url = "http://localhost:8080/api/v1/user";
 
   async function getAllUser() {
@@ -37,15 +40,27 @@ function App() {
     const updatedFirstName = editedValues[`${userId}_firstName`] || userData.find(user => user.id === userId).firstName;
     const updatedLastName = editedValues[`${userId}_lastName`] || userData.find(user => user.id === userId).lastName;
 
+    if (updatedFirstName === "") {
+      console.log("Empty Fields")
+      toast.error('Empty Fields!', {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
+      return 0;
+    }
     const updatedUserData = {
       firstName: updatedFirstName,
       lastName: updatedLastName,
     };
 
-    console.log(updatedUserData)
-
     try {
-      const response = await fetch(url+`/${userId}`, {
+      const response = await fetch(url + `/${userId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -54,23 +69,46 @@ function App() {
       });
 
       if (response.ok) {
-        setUpdateMode(false)
+        setUpdateMode(false);
         console.log(`User ${userId} updated successfully.`);
 
         setEditMode((prevEditMode) => ({
           ...prevEditMode,
           [userId]: false,
         }));
+
+        setUserData((prevUserData) => {
+          const updatedUserData = prevUserData.map((user) => {
+            if (user.id === userId) {
+              return {
+                ...user,
+                firstName: updatedFirstName,
+                lastName: updatedLastName,
+              };
+            }
+            return user;
+          });
+          return updatedUserData;
+        });
+        toast.success(`${updatedFirstName}'s details have been updated!`,{
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
         setEditedValues((prevEditedValues) => ({
           ...prevEditedValues,
           [`${userId}_firstName`]: "",
           [`${userId}_lastName`]: "",
         }));
-
-        getAllUser();
       } else {
         console.error(`Failed to update user ${userId}.`);
       }
+
     } catch (error) {
       console.error(`An error occurred while updating user ${userId}.`, error);
     }
@@ -84,6 +122,16 @@ function App() {
     try {
       if (firstName === "") {
         console.log("Empty Fields")
+        toast.error('Empty Fields!', {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          });
         return 0;
       }
       const response = await fetch(url, {
@@ -101,6 +149,16 @@ function App() {
         console.log("User added successfully.");
         setFirstName("")
         setLastName("")
+        toast.success(`User added!`,{
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
         getAllUser();
       } else {
         console.error("Failed to add user.");
@@ -112,21 +170,21 @@ function App() {
 
   async function handleDeleteUser(userId, index) {
     const deletedRow = document.getElementById(`userRow_${index}`);
-    
+
     deletedRow.classList.add('fade-out');
-    
+
     await new Promise(resolve => setTimeout(resolve, 1000));
     deletedRow.classList.remove('fade-out');
-    
+
     try {
       const response = await fetch(url + `/${userId}`, {
         method: "DELETE",
       });
-      
+
       if (response.ok) {
 
         console.log(`User ${userId} deleted successfully.`);
-        
+
         const updatedUserDataWithoutDeleted = userData.filter(user => user.id !== userId);
         setUserData(updatedUserDataWithoutDeleted);
       } else {
@@ -136,7 +194,7 @@ function App() {
       console.error(`An error occurred while deleting user ${userId}:`, error);
     }
   }
-  
+
 
 
   const handleEditUser = (userId) => {
@@ -161,8 +219,8 @@ function App() {
   return (
     <div className="App">
       <div className='myform'>
-      <CustomInput name={"First Name"} setNewValue={setFirstName} value={firstName} />
-      <CustomInput name={"Last Name"} setNewValue={setLastName} value={lastName} />
+        <CustomInput name={"First Name"} setNewValue={setFirstName} value={firstName} />
+        <CustomInput name={"Last Name"} setNewValue={setLastName} value={lastName} />
 
         <CustomButton name={"Add User"} onAddClick={handleAddUser} />
       </div>
@@ -181,26 +239,26 @@ function App() {
             <tr key={index}
               id={`userRow_${index}`}
               className='animate__animated '
-              style={{padding: "10px 15px"}}
-              >
-                <td>{index + 1}</td>
+              style={{ padding: "10px 15px" }}
+            >
+              <td>{index + 1}</td>
               <td>
                 {editMode[user.id] ? (
-                  <CustomEditInput 
-                  name={"First Name"}
-                  defaultValue={user.firstName}
-                  onChangeV={(event) => handleInputChange(event, user.id, "firstName")}
+                  <CustomEditInput
+                    name={"First Name"}
+                    defaultValue={user.firstName}
+                    onChangeV={(event) => handleInputChange(event, user.id, "firstName")}
                   />
-                  ) : (
-                    user.firstName
-                    )}
+                ) : (
+                  user.firstName
+                )}
               </td>
               <td>
                 {editMode[user.id] ? (
-                  <CustomEditInput 
-                  name={"Last Name"}
-                  defaultValue={user.lastName}
-                  onChangeV={(event) => handleInputChange(event, user.id, "lastName")}
+                  <CustomEditInput
+                    name={"Last Name"}
+                    defaultValue={user.lastName}
+                    onChangeV={(event) => handleInputChange(event, user.id, "lastName")}
                   />
 
                 ) : (
@@ -209,10 +267,10 @@ function App() {
               </td>
               <td>
                 <ActionsButton
-                    user={{
-                      id: user.id,
-                      editTrue: UpdateMode,
-                    }}
+                  user={{
+                    id: user.id,
+                    editTrue: UpdateMode,
+                  }}
                   onEditClick={() => handleEditUser(user.id)}
                   onUpdateClick={() => handleUpdateUser(user.id)}
                   onDeleteClick={() => handleDeleteUser(user.id, index)}
@@ -222,6 +280,19 @@ function App() {
           ))}
         </tbody>
       </table>
+
+      <ToastContainer
+        position="bottom-right"
+        autoClose={4000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </div>
   );
 }

@@ -16,7 +16,7 @@ function CustomInput({ name, setNewValue, value }) {
 
   return (
     <div className="inputBox">
-      <input required="true" type="text" placeholder="Write here..." value={inputValue} onChange={handleInputChange} />
+      <input required={true} type="text" placeholder="Write here..." value={inputValue} onChange={handleInputChange} />
       <span>{name} :</span>
     </div>
   );
